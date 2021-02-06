@@ -51,8 +51,8 @@
       <% end %>
       <div class="new-comment">
       <%= form_with(model:[@book, @book_comment], local: true) do |f| %>
-        <%= f.text_area :comment,placeholder: "コメントをここに" %>
-        <%= f.submit "送信する" %>
+          <%= f.text_area :comment,placeholder: "コメントをここに" %>
+          <%= f.submit "送信する" %>
       <% end %>
       </div>
     </div>
