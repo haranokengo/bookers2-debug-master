@@ -2,7 +2,7 @@
   <h1>User</h1>
   <% if @users.empty? %>
     <span>検索結果はありません</span>
-  <% end %>
+  <% else %>
   <table class="table col-lg-12">
     <thead>
       <tr>
@@ -14,18 +14,23 @@
     <% @users.each do |user| %>
     <tbody>
       <tr>
-        <td><%= attachment_image_tag(user, :profile_image, :fill, 50, 50, fallback: "no-image-icon.jpg") %></td>
-        <td><%= user.name %></td>
+        <td>
+          <%= link_to user_path(user) do %>
+            <%= attachment_image_tag(user, :profile_image, :fill, 50, 50, fallback: "no-image-icon.jpg") %>
+          <% end %>
+        </td>
+        <td><%= link_to user.name,user_path(user) %></td>
         <td><%= user.introduction %></td>
       </tr>
     </tbody>
+    <% end %>
     <% end %>
   </table>
 <% elsif @user_or_book == "2" %>
     <h2>Book</h2>
     <% if @books.empty? %>
       <span>検索結果はありません</span>
-    <% end %>
+    <% else %>
     <table class="table col-lg-12">
       <thead>
         <tr>
@@ -46,6 +51,7 @@
           <td><%= book.body %></td>
         </tr>
       </tbody>
+    <% end %>
     <% end %>
     </table>
 <% else %>
