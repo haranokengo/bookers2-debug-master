@@ -1,27 +1,52 @@
-
 <% if @user_or_book == "1"%>
   <h1>User</h1>
-  <table>
-    <% @users.each do |user| %>
+  <% if @users.empty? %>
+    <span>検索結果はありません</span>
+  <% end %>
+  <table class="table col-lg-12">
     <thead>
       <tr>
         <th></th>
-        <th><%= user.name %> </th>
+        <th>Name</th>
+        <th>Introduction</th>
       </tr>
     </thead>
+    <% @users.each do |user| %>
+    <tbody>
+      <tr>
+        <td><%= attachment_image_tag(user, :profile_image, :fill, 50, 50, fallback: "no-image-icon.jpg") %></td>
+        <td><%= user.name %></td>
+        <td><%= user.introduction %></td>
+      </tr>
+    </tbody>
     <% end %>
   </table>
 <% elsif @user_or_book == "2" %>
-  <h2>Post</h2>
-  <table>
-  <% @books.each do |book| %>
-    <thead>
-      <tr>
-        <th></th>
-        <th><%= book.title %></th>
-      </tr>
-    </thead>
-  <% end %>
-  </table>
+    <h2>Book</h2>
+    <% if @books.empty? %>
+      <span>検索結果はありません</span>
+    <% end %>
+    <table class="table col-lg-12">
+      <thead>
+        <tr>
+          <th></th>
+          <th>Title</th>
+          <th>Opinion</th>
+        </tr>
+      </thead>
+      <% @books.each do |book| %>
+      <tbody>
+        <tr>
+          <td>
+            <%= link_to user_path(book.user) do %>
+              <%= attachment_image_tag(book.user, :profile_image, :fill, 50, 50, fallback: "no-image-icon.jpg") %>
+            <% end %>
+          </td>
+          <td><%= link_to book.title, book_path(book), class: "book_#{book.id}" %></td>
+          <td><%= book.body %></td>
+        </tr>
+      </tbody>
+    <% end %>
+    </table>
 <% else %>
 <% end %>
