@@ -22,40 +22,24 @@
             <td><%= link_to 'Edit', edit_book_path(@book), class: "btn btn-sm btn-success edit_book_#{@book.id}" %></td>
             <td><%= link_to 'Destroy', book_path(@book), method: :delete, data: { confirm: '本当に消しますか？' }, class: "btn btn-sm btn-danger destroy_book_#{@book.id}"%></td>
           <% end %>
-          <% if @book.favorited_by?(current_user) %>
-            <td>
-              <%= link_to book_favorites_path(@book), method: :delete do %>
-                ♥<%= @book.favorites.count %>
-              <% end %>
-            </td>
-          <% else %>
-            <td>
-              <%=link_to book_favorites_path(@book), method: :post do %>
-                ♡<%= @book.favorites.count %>
-              <% end %>
-            </td>
-          <% end %>
+          <td id="favorites_buttons_<%= @book.id %>">
+            <%= render partial: 'favorites/favorite', locals: { book: @book} %>
+          </td>
           <td>
             コメント件数:<%= @book.book_comments.count %>
           </td>
         </tr>
       </table>
-      <% @book.book_comments.each do |book_comment| %>
-        <%= book_comment.user.name %>
-        <%= book_comment.comment %>
-        <% if book_comment.user == current_user %>
-        <div class="comment-delete">
-          <%= link_to "削除", book_book_comment_path(book_comment.book, book_comment), method: :delete %>
-        </div>
+      <li id="comments_area">
+        <%= render partial: 'book_comments/index', locals: { book_comment: @book_comment, book: @book } %>
+      </li>
+      <div>
+        <% if user_signed_in? %>
+          <div class="comment-create">
+            <h3>レビューを投稿する</h3>
+              <%= render partial: 'book_comments/form', locals: { book_comment: @book_comment, book: @book } %>
+          </div>
         <% end %>
-      <% end %>
-      <div class="new-comment">
-      <% unless @book.user == current_user %>
-        <%= form_with(model:[@book, @book_comment], local: true) do |f| %>
-          <%= f.text_area :comment,placeholder: "コメントをここに" %>
-          <%= f.submit "送信する" %>
-        <% end %>
-      <% end %>
       </div>
     </div>
   </div>
