@@ -36,8 +36,7 @@
       <div>
         <% if user_signed_in? %>
           <div class="comment-create">
-            <h3>レビューを投稿する</h3>
-              <%= render partial: 'book_comments/form', locals: { book_comment: @book_comment, book: @book } %>
+            <%= render partial: 'book_comments/form', locals: { book_comment: @book_comment, book: @book } %>
           </div>
         <% end %>
       </div>

@@ -1,5 +1,5 @@
 <%= book.book_comments.count %>件コメント
-<h6 class="more" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">もっと見る....</h6>
+<h6 button class="btn btn-link" type="button" class="more" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">もっと見る....</h6>
   <% book.book_comments.first(2).each do |book_comment| %>
     <% unless book_comment.id.nil? %>
       <li class="comment-container">
